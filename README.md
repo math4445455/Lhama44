@@ -1,8 +1,8 @@
-# Lhama44 🦥️🤖
+# Lhama44
 
-**Lhama44** é uma IA geradora de texto simples baseada em modelos de linguagem como o DistilGPT2, implementada com FastAPI.
+**Lhama44** é uma IA de texto simples, implementada com FastAPI.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 * Recebe um prompt de texto
 * Gera continuações usando modelo de linguagem
@@ -10,7 +10,7 @@
 
 ---
 
-## 🚀 Como usar localmente
+## Como usar no PC
 
 ### 1. Clone o repositório
 
@@ -38,7 +38,7 @@ uvicorn lhama44_api:app --reload
 
 ---
 
-## 🌐 Deploy (Render ou outro)
+##  Deploy (Render ou outro)
 
 * Use `uvicorn lhama44_api:app --host 0.0.0.0 --port 8000` como comando de start
 * Configure a porta como 8000
@@ -46,13 +46,13 @@ uvicorn lhama44_api:app --reload
 
 ---
 
-## 🎓 Exemplo de requisição
+##  Exemplo de requisição
 
 POST `/gerar/`
 
 ```json
 {
-  "texto": "Era uma vez uma IA chamada",
+  "texto": "História da revolução russa",
   "max_tokens": 100
 }
 ```
@@ -61,12 +61,12 @@ POST `/gerar/`
 
 ```json
 {
-  "resposta": "Era uma vez uma IA chamada Lhama44 que..."
+  "resposta": "A revolução russa ocorreu..."
 }
 ```
 
 ---
 
-## 📚 Licença
+##  Licença
 
-Este projeto é de uso livre para fins educacionais e demonstrativos.
+Este projeto é de uso livre, porém para outros fins além de uso do cotidiano, é necessária a minha aprovação.
