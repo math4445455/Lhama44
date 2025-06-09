@@ -70,3 +70,4 @@ POST `/gerar/`
 ##  Licença
 
 Este projeto é de uso livre, porém para outros fins além de uso do cotidiano, é necessária a minha aprovação.
+Ia criada por: Matheus Marques Lopes (Matheuzinho)
