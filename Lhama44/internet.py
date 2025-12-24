@@ -1,42 +1,39 @@
 import requests
 
-def buscar_na_web(pergunta):
+HEADERS = {"User-Agent": "Lhama44/1.0 (https://github.com/)"}
+
+def buscar_na_web(pergunta: str) -> str | None:
+    termo = (pergunta or "").strip()
+    if not termo:
+        return None
+
+    # Usa a API de busca da Wikipédia (pt)
+    url_busca = "https://pt.wikipedia.org/w/api.php"
+    params_busca = {
+        "action": "query",
+        "list": "search",
+        "srsearch": termo,
+        "format": "json",
+    }
+
     try:
-        # 1. Buscar o título mais provável
-        busca_url = "https://pt.wikipedia.org/w/api.php"
-        busca_params = {
-            "action": "query",
-            "list": "search",
-            "srsearch": pergunta,
-            "format": "json"
-        }
-
-        busca = requests.get(busca_url, params=busca_params, timeout=10)
-        dados_busca = busca.json()
-
-        resultados = dados_busca.get("query", {}).get("search", [])
+        r = requests.get(url_busca, params=params_busca, headers=HEADERS, timeout=8)
+        r.raise_for_status()
+        data = r.json()
+        resultados = data.get("query", {}).get("search", [])
         if not resultados:
             return None
 
         titulo = resultados[0]["title"]
 
-        # 2. Buscar o resumo do título encontrado
-        resumo_url = f"https://pt.wikipedia.org/api/rest_v1/page/summary/{titulo.replace(' ', '%20')}"
-        resumo = requests.get(resumo_url, timeout=10)
+        # Pega o resumo do artigo encontrado
+        url_resumo = f"https://pt.wikipedia.org/api/rest_v1/page/summary/{requests.utils.quote(titulo)}"
+        r2 = requests.get(url_resumo, headers=HEADERS, timeout=8)
+        r2.raise_for_status()
+        data2 = r2.json()
 
-        if resumo.status_code != 200:
-            return None
+        resumo = data2.get("extract")
+        return resumo if resumo else None
 
-        dados_resumo = resumo.json()
-        texto = dados_resumo.get("extract")
-
-        if not texto:
-            return None
-
-        if len(texto) > 350:
-            texto = texto[:350] + "..."
-
-        return texto
-
-    except:
+    except Exception:
         return None
